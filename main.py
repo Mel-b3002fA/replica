@@ -30,3 +30,18 @@ import torch # we use PyTorch: https://pytorch.org
 data = torch.tensor(encode(text), dtype=torch.long)
 print(data.shape, data.dtype)
 print(data[:1000]) # the 1000 characters we looked at earier will to the GPT look like this
+
+# Let's now split up the data into train and validation sets
+n = int(0.9*len(data)) # first 90% will be train, rest val
+train_data = data[:n]
+val_data = data[n:]
+
+block_size = 8
+train_data[:block_size+1]
+
+x = train_data[:block_size]
+y = train_data[1:block_size+1]
+for t in range(block_size):
+    context = x[:t+1]
+    target = y[t]
+    print(f"when input is {context} the target: {target}")
