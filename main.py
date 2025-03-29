@@ -1,5 +1,20 @@
 # We always start with a dataset to train on. Let's download the tiny shakespeare dataset
-!wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+import requests
+
+url = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+file_path = "input.txt"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # Raise an error for bad responses (4xx, 5xx)
+    
+    with open(file_path, "w", encoding="utf-8") as file:
+        file.write(response.text)
+    
+    print(f"Download complete: {file_path}")
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+
 
 # read it in to inspect it
 with open('input.txt', 'r', encoding='utf-8') as f:
